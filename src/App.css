@@ -1,5 +1,13 @@
+body {
+  background-color: #18191A;
+  color: ghostwhite;
+}
+
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
+ 
+  
 }
 
 .App-logo {
