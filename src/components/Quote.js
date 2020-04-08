@@ -1,25 +1,35 @@
 import React from 'react';
-import './Quote.css'
-import axios from 'axios'
+import './Quote.css';
+import axios from 'axios';
+import Typewriter from 'typewriter-effect';
+
 
 export default class Quote extends React.Component {
-
-    state = {
-        quote: {}
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            quote: {
+                en: ''
+            }
+        }
     }
-
-
+    
     componentDidMount() {
         axios.get(`https://programming-quotes-api.herokuapp.com/quotes/random`)
         .then(res => {
             console.log(res.data)
             this.setState({ quote: res.data })
         })
+
+        
+
+        
     }
+
 
     handleClick = event => {
         event.preventDefault()
-
         axios.get(`https://programming-quotes-api.herokuapp.com/quotes/random`)
         .then(res => {
             console.log(res.data)
@@ -32,15 +42,23 @@ export default class Quote extends React.Component {
         return (
             <React.Fragment>
             <div>
-            <div className="d-flex justify-content-center align-items-center" style={{height: "50vh"}}>
-                
-                <h1 className="textQuote p-5 typewriteEffect">{ `"${this.state.quote.en || `...`}"` }</h1>
-            
-                
+                <div className="d-flex justify-content-center align-items-center p-3" style={{height: "70vh"}}>
+                    <Typewriter
+                        options={{
+                            wrapperClassName: "textQuote h1",
+                            cursorClassName: "h1",
+                            strings: [`"${this.state.quote.en || `...`}" <br>- ${this.state.quote.author || `...`}`],
+                            autoStart: true,
+                            loop: true,
+                            delay: 10,
+                            deleteSpeed: 10,
+                            
+                            
+                        }}
+                    />
+                </div>
             </div>
-            <h3>{ `${this.state.quote.author || `...`}` }</h3>
-            </div>
-            <div className="mt-5">
+            <div className="mt-3">
             <a className="twitter-share-button mr-5"
                     href={`https://twitter.com/intent/tweet?text="${this.state.quote.en}" -${this.state.quote.author}`}
                     target="_noblank"
